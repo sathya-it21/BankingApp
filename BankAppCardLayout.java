@@ -119,10 +119,23 @@ public class BankAppCardLayout {
                                 options[0]
                         );
                         if (choice == 0) {
-                            resultLabel.setText(selected.getName() + "'s Balance: $" + String.format("%.2f", selected.getBalance()));
+                            JOptionPane.showMessageDialog(panel,
+                                selected.getName() + "'s Balance: $" + String.format("%.2f", selected.getBalance()),
+                                "Balance Info",
+                                JOptionPane.INFORMATION_MESSAGE);
                         } else if (choice == 1) {
-                            double interest = selected.getBalance() * annualInterestRate / 100;
-                            resultLabel.setText("Interest for " + selected.getName() + ": $" + String.format("%.2f", interest));
+                            if (annualInterestRate == 0.0) {
+                                JOptionPane.showMessageDialog(panel,
+                                    "Annual interest rate is not set. Please set it first.",
+                                    "Interest Rate Missing",
+                                    JOptionPane.WARNING_MESSAGE);
+                            } else {
+                                double interest = selected.getBalance() * annualInterestRate / 100;
+                                JOptionPane.showMessageDialog(panel,
+                                    "Interest for " + selected.getName() + ": $" + String.format("%.2f", interest),
+                                    "Interest Info",
+                                    JOptionPane.INFORMATION_MESSAGE);
+                            }
                         }
                     }
                 }
@@ -164,6 +177,9 @@ public class BankAppCardLayout {
                     JOptionPane.showMessageDialog(panel, "Customer name cannot be empty.");
                     return;
                 }
+                
+               
+
 
                 customers.add(new Customer(name, balance));
                 refreshCustomerListPanel();
